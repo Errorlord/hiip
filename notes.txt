@@ -1,0 +1,109 @@
+GIT USAGE
+
+cat ~/.ssh/id_rsa.pub (to find public SSH key)
+git remote add origin git@github.com:(githubaccountname - Errorlord)/(name of project).git
+git push -u origin master (only first time)
+git remote -v
+
+git config --global user.name "your name"
+git config --global user.email "your email"
+git config --listgit init
+git add -A
+git commit -m "A useful message"
+git status
+git checkout -f (this reverts back to last commit)
+
+
+
+
+
+
+TO PREPARE FOR HEROKU
+
+move gem 'sqlite' from the top to under group :development do
+create -->  group :production do
+              gem 'pg'
+              gem 'rails_12factor'
+            end
+bundle install --without production
+
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh (use this to install heroku toolbelt)
+heroku version
+heroku login
+(will prompt you to enter heroku credentials)
+heroku create
+(remember to commit updates to gemfile)
+heroku keys:add
+(type in capital Y)
+git push heroku master
+heroku rename (name)
+
+
+
+
+
+
+TO PREPARE DATABASE
+
+RAILS CONVENTIONS
+  -> Model Name           -> Singular Capital                       User
+  -> Table Name           -> Plural Lowercase                       users
+  -> Model name filename  -> lowercase singular                     user.rb
+  -> Controller name      -> plural of model and snakecase          users_controller.rb
+  
+CREATE DATABASE
+
+rails generate migration create_(table name)
+  In this file, add data things                           t.string :title
+  rake db:migrate
+  rake db:dbrollback (drops tables) --> Look at this in schema.rb
+  
+rails generate migration add_description_to_(table name)
+  Add things to previously generated migrations           add_column :articles, :description, :text
+                                                          add_column :(migration), :(title of column), :(data type)
+                                                          add_column :(migration), :created_at, :datetime
+                                                          add_column :(migration), :created_at, :datetime
+
+Create in (main directory)/app/model model name filename
+IN FILE
+                                                          class (Model Name) < ActiveRecord :: Base
+                                                          
+                                                          
+                                                          end
+
+RAILS CONSOLE (PLAY WITH DATABASE)
+
+rails console
+(Model Name).all                                # shows entries
+(Model Name)                                    # shows parameters
+(Model Name).find(x)                            # finds the instance with id x
+(instance name) = (Model Name).new              # create an empty Model
+(instance name).title = "(title)"               # fills in title
+(instance name).description = "(description)"   # fills in the description
+(instance name).save                            # saves the instance and commits it to the table
+(instance name) = (Model Name).new(title: "(title)", description: "(description)")    # mass assignment
+(instance name).save                          
+(Model Name).create(title: "(title)", description: "(description)")                   #hits the database directly
+exit                                            # exits the rails console
+(instance name) = (Model Name).find(2)          # grabs the 2nd entry in the database
+(instance name).destroy                         # deletes the selected entry from the table
+(instance name).errors.any?                     # returns boolean if errors
+(instance name).errors.full_messages            # returns error
+
+IN ORDER TO ADD VALIDATIONS --> model.rb
+
+validates :title, presence: true, length: { minimum: 3, maximum: 50 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
