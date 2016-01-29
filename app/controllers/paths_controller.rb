@@ -43,6 +43,7 @@ class PathsController < ApplicationController
   end
   
   def update
+    @path = Path.find(params[:id])
     if @path.save
       flash[:notice] = "Path was successfully updated"
       redirect_to path_path(@path)
