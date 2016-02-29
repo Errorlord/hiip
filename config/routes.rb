@@ -2,8 +2,15 @@ Rails.application.routes.draw do
   resources :articles
   resources :structures
   resources :paths
+  resources :nodes
   
-  root 'articles#home'
+  get 'welcome' => 'welcome#index'
+  post 'welcome' => 'welcome#handle_answer'
+  
+  get 'displays' => 'displays#index'
+  get 'displays/show' => 'displays#show'
+  
+  root 'nodes#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

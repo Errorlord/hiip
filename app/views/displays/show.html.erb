@@ -1,0 +1,26 @@
+<h1><%= @id.title %></h1><br/>
+<p><%= @id.content %></p><br/>
+
+<% string = @id.position.to_s + "." %>
+<% boolean = false %>
+<% @paths.each do |f| %>
+  <% if !f.position.index(string).nil? %>
+    <% boolean = true %>
+  <% end %>
+<% end %>
+<% if boolean %>
+<table>
+  <tr>
+    <th>Title</th>
+  </tr>
+  <% @paths.each do |f| %>
+    <% if !f.position.index(string).nil? %>
+    <tr>
+      <td><%= link_to "#{f.title}", {:controller => "displays", :action => "show", :id => f } %> </td>
+    </tr>
+    <% end %>
+  <% end %>
+</table><br/>
+<% end %>
+
+<%= link_to "Index", "/displays" %>

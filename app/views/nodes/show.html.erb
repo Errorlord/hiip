@@ -1,0 +1,37 @@
+<style type="text/css">
+  td, th {
+    padding: 5px;
+  }
+</style>
+
+<h1>Showing selected node</h1>
+
+<p>Title: <%= @node.title %></p>
+<p>content: <%= @node.content %></p>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Position</th>
+  </tr>
+  <% string = @node.position.to_s + "." %>
+  <% @nodes.each do |f| %>
+    <% stringTwo = f.position %>
+    <% if f.parent == @node.position %>
+      <tr>
+        <td><%= f.title %></td>
+        <td><%= f.content %></td>
+        <td><%= f.position %></td>
+        <td><%= link_to "Edit", edit_node_path(f) %></td>
+        <td><%= link_to "Show", node_path(f) %></td>
+        <td><%= link_to "Destroy", node_path(f), method: :delete, data: {confirm: "Are you sure?"}%></td>
+    </tr>
+    <% end %>
+  <% end %>
+</table>
+
+
+<%= link_to "Edit this node", edit_node_path(@node) %>
+<%= link_to "Back to node listing", nodes_path %>
+<%= link_to "Create node", { :controller => "nodes", :action => "new", :parent => @node }  %>

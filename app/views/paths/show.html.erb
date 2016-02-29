@@ -34,4 +34,4 @@
 
 <%= link_to "Edit this path", edit_path_path(@path) %>
 <%= link_to "Back to path listing", paths_path %>
-<%= link_to "Create path", new_path_path %>
+<%= link_to "Create path", { :controller => "paths", :action => "new", :parent => @path }  %>

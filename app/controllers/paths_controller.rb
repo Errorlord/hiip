@@ -1,17 +1,18 @@
 class PathsController < ApplicationController
   before_action :set_path, only: [:edit, :update, :show, :destroy]
   
-  @@newpath
-  
   def index
     @paths = Path.all
   end
   
   def new
     @path = Path.new
+    
+    @parent = Path.find(params[:parent])
   end
   
   def create
+=begin
     begin
       @parent = @@newpath
     rescue
@@ -23,6 +24,12 @@ class PathsController < ApplicationController
       @path.position = find_next_empty(@parent)
     end
     @path.position = @parent.position
+=end
+
+    @path = Path.new(path_params)
+    
+    @position = Path.find(params[:parent]).position     # string
+    @path.position = find_next_empty(@position)
     
     if @path.save
       flash[:notice] = "Path was succesfully created"
@@ -39,7 +46,7 @@ class PathsController < ApplicationController
   end
   
   def edit
-    
+      @parent = Path.find(params[:parent])
   end
   
   def update
@@ -67,14 +74,15 @@ class PathsController < ApplicationController
     params.require(:path).permit(:title, :content)
   end
   
+=begin
   def find_next_empty(input)
     count = 1
     
     @paths = Path.all
     
+    string = input.position + "."
     @paths.each do |f|
-      string = input.position + "."
-      if f.position.index(string)
+      if !f.position.index(string).nil?
         count = count + 1
       end
     end
@@ -83,6 +91,35 @@ class PathsController < ApplicationController
     output.concat("." + count.to_s)
     return output
   end
+=end
   
+  def find_next_empty(input)  # string
   
+    string_child = input + "."
+    
+    count = 0
+    Path.all.each do |f|
+      if f.position.index(string_child) == 0  #f.position (input) string_child (kill)
+        if get_level(f.position, string_child) > count
+          count = get_level(f.position, string_child)
+        end
+      end
+    end
+    
+    count += 1
+    
+    #output = string.to_s + count.to_s
+    output = input + "." + count.to_s
+    return output
+  end
+  
+  def get_level(input, kill) 
+    temp = input.sub(kill,"")
+    my_length = temp.index(".")
+    if my_length
+      return temp[0, my_length].to_i
+    else
+      return temp.to_i
+    end
+  end
 end

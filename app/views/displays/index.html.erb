@@ -1,0 +1,14 @@
+<h1>Listing All Paths</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+  </tr>
+  <% @paths.each do |f| %>
+    <% if f.position != "1" %>
+      <tr>
+        <td><%= link_to "#{f.title}", {:controller => "displays", :action => "show", :id => f } %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

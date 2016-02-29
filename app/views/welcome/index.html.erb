@@ -1,0 +1,15 @@
+<%= @questions.first.title %><br/><br/>
+
+<% @questions.each do |f| %>
+  <%= f.FormalPrint %>
+  <%= f.title %><br/> 
+  <%= f.content %><br/>
+  <%= f.position %><br/><br/>
+<% end %>
+
+
+
+<form action="https://hiip-errorlord404.c9users.io/welcome" method="post">
+  <input type="text" name="MyName"/>
+  <input type="submit" name="submit" value="Submit"/>
+</form>

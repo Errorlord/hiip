@@ -56,7 +56,7 @@ CREATE DATABASE
 rails generate migration create_(table name)
   In this file, add data things                           t.string :title
   rake db:migrate
-  rake db:dbrollback (drops tables) --> Look at this in schema.rb
+  rake db:rollback (drops tables) --> Look at this in schema.rb
   
 rails generate migration add_description_to_(table name)
   Add things to previously generated migrations           add_column :articles, :description, :text
