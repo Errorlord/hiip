@@ -1,10 +1,10 @@
 class DisplaysController < ApplicationController
   
   def index
-    @paths = Path.all
+    @paths = Node.all
   end
   def show
-    @id = Path.find(params[:id])
-    @paths = Path.all
+    @id = Node.find(params[:id])
+    @paths = Node.all
   end
 end
