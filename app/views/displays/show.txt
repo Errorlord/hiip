@@ -1,6 +1,3 @@
-<h1><%= @id.title %></h1><br/>
-<p><%= @id.content %></p><br/>
-
 <% string = @id.position.to_s + "." %>
 <% boolean = false %>
 <% @nodes.each do |f| %>
@@ -15,14 +12,10 @@
   </tr>
   <% @nodes.each do |f| %>
     <% if !f.position.index(string).nil? %>
-      <% if f.parent == @id.position %>
-        <tr>
-          <td><%= link_to "#{f.title}", {:controller => "displays", :action => "show", :id => f } %> </td>
-        </tr>
-      <% end %>
+    <tr>
+      <td><%= link_to "#{f.title}", {:controller => "displays", :action => "show", :id => f } %> </td>
+    </tr>
     <% end %>
   <% end %>
 </table><br/>
 <% end %>
-
-<%= link_to "Index", "/displays" %>

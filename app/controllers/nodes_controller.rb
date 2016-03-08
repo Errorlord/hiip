@@ -13,12 +13,13 @@ class NodesController < ApplicationController
 
   def create
     @node = Node.new(node_params)
+    @parent = Node.find(params[:parent])
     
     @node.parent = Node.find(params[:parent]).position
     @node.position = find_next_empty(@node.parent)
     
     if @node.save
-      flash[:notice] = "Node was succesfully created"
+      flash[:notice] = "Node was succesfully created, #{params[:parent]}"
       redirect_to node_path(@node)
     else
       render 'new'
