@@ -1,0 +1,55 @@
+.jumbotron {
+  background-image: asset-url("asdf.png");
+  background-size: cover;
+  height: 700px; }
+
+.jumbotron h1 {
+  color: #FFFFFF;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold; }
+
+.btn-xlarge {
+  font-size: 1.7em;
+  background-color: #FFFFFF;
+  float: center;
+  color: #FFFFFF;
+  text-align: center; }
+
+.btn-xlarge:visited {
+  color: #FFFFFF; }
+
+.btn-xlarge:hover {
+  font-size: 1.7em;
+  background-color: #444; }
+
+.footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #777; }
+
+.footer a:hover {
+  color: #222; }
+
+.footer small {
+  float: left; }
+
+.footer ul {
+  float: right;
+  list-stype: none; }
+
+.float ul li {
+  float: left;
+  margin-left: 15px; }
+
+.list-articles tr td {
+  margin-left: 15px; }
+
+body {
+  background-color: #000000; }
+
+#center {
+  text-align: center; }
+
+/*# sourceMappingURL=custom.css.css.map */
