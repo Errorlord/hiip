@@ -13,7 +13,7 @@ class NodesController < ApplicationController
 
   def create
     @node = Node.new(node_params)
-    @parent = Node.find(params[:parent])
+    # @parent = Node.find(params[:parent])
     
     @node.parent = Node.find(params[:parent]).position
     @node.position = find_next_empty(@node.parent)
@@ -28,15 +28,16 @@ class NodesController < ApplicationController
   
   def show
     @nodes = Node.all
+    @node = Node.find(params[:id])
   end
   
   def edit
-    @parent = Node.find(params[:parent])
+    @parent = Node.find(params[:id])
   end
   
   def update
-    if @node.save
-      flash[:notice] = "Node was succesfully updated!"
+    if @node.update(node_params)
+      flash[:notice] = "Node was succesfully updated!\nHello.\n#{@node.content()}\t#{params[:node]}"
       redirect_to node_path(@node)
     else
       render 'new'

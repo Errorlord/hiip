@@ -1,17 +1,37 @@
-<h1><%= @id.title %></h1><br/>
-<p><%= @id.content %></p><br/>
+<% parent = @id.position %>
+<% variable = "" %>
 
-<% string = @id.position.to_s + "." %>
-<% boolean = false %>
+<% while parent.include? "." %>
+  <% variable += parent[0 .. parent.index(".")] %>
+  <% parent = parent[parent.index(".") + 1 .. (parent.length - 1)] %>
+<% end %>
+
+<% variable = variable.chomp(".") %>
+
 <% @nodes.each do |f| %>
-  <% if !f.position.index(string).nil? %>
-    <% boolean = true %>
+  <% if f.position == variable %>
+    <%= link_to "Back to #{f.title}", {:controller => "displays", :action => "show", :id => f } %>
   <% end %>
 <% end %>
-<% if boolean %>
+
+<% if @id.title != "1" %>
+<h1><%= @id.title %></h1></br>
+<p><%= @id.content %></p></br>
+<% end %>
+
+<% hasChildren = false %>
+<% @nodes.each do |f| %>
+  <% if f.parent() == Node.find(params[:id]).position %>
+    <% hasChildren = true %>
+  <% end %>
+<% end %>
+
+<% string = @id.position.to_s + "." %>
+
+<% if hasChildren %>
 <table>
   <tr>
-    <th>Title</th>
+    <th>Select:</th>
   </tr>
   <% @nodes.each do |f| %>
     <% if !f.position.index(string).nil? %>
@@ -25,4 +45,4 @@
 </table><br/>
 <% end %>
 
-<%= link_to "Index", "/displays" %>
+<%= link_to "Main", "/displays" %>

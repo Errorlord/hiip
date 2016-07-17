@@ -19,3 +19,47 @@
   <% end %>
 </table><br/>
 <% end %>
+
+ANOTHER ONE
+
+<p>Test Area</p>
+<%= @parent[0, @parent.index(".")] %>
+<p><%= link_to "Back to #{@thing.title} #{@thing.position}", displays_path(@this) %></p>
+<h1><%= @id.title %></h1><br/>
+<p><%= @id.content %></p><br/>
+
+<% temp = @id.position %>
+<%= temp[0, temp.index(".")] %>
+
+<% @nodes.each do |f| %>
+  <% if f.position == temp %>
+    <%= link_to "Back to #{f.title}", displays_path(f) %>
+  <% end %>
+<% end %>
+
+</br>
+<% string = @id.position.to_s + "." %>
+<% boolean = false %>
+<% @nodes.each do |f| %>
+  <% if !f.position.index(string).nil? %>
+    <% boolean = true %>
+  <% end %>
+<% end %>
+<% if boolean %>
+<table>
+  <tr>
+    <th>Select:</th>
+  </tr>
+  <% @nodes.each do |f| %>
+    <% if !f.position.index(string).nil? %>
+      <% if f.parent == @id.position %>
+        <tr>
+          <td><%= link_to "#{f.title}", {:controller => "displays", :action => "show", :id => f } %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+</table><br/>
+<% end %>
+
+<%= link_to "Main", "/displays" %>

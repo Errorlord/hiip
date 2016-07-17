@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
+  resources :recipes
   resources :articles
   resources :structures
   resources :paths
   resources :nodes
   
   get 'welcome' => 'welcome#index'
+  get 'decarlo' => 'welcome#decarlo'
+  get 'decarlo2' => 'welcome#decarlo#information2'
   post 'welcome' => 'welcome#handle_answer'
+  get 'asdf' => 'welcome#background'
   
   get 'displays' => 'displays#index'
   get 'displays/show' => 'displays#show'
