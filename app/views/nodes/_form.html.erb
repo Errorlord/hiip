@@ -15,7 +15,7 @@
   
   <p>
     <%= f.label :content %><br/>
-    <%= f.text_area :content %>
+    <%= f.text_area :content, :cols => "50", :rows => "10" %>
   </p>
   
   <input type="hidden" name="parent" value="<%= @parent.id %>" />
