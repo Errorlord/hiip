@@ -4,7 +4,7 @@ class NodesController < ApplicationController
   def index
     @nodes = Node.all
     
-    # @sorted = sort(to_class())
+    @sorted = sort(to_class())
   end
   
   def new
@@ -30,10 +30,7 @@ class NodesController < ApplicationController
   
   def show
     @nodes = Node.all
-    @id = Node.find(params[:id])
     @node = Node.find(params[:id])
-    @parent = @node.position.chomp(".")
-    @this = Node.find(params[:id])
   end
   
   def edit
@@ -178,12 +175,8 @@ class NodesController < ApplicationController
     
     arr.each do |f|
       if f.temp_position.include?(".") != true
-          arr1.push(f)
+          arr1.push(arr.delete(f))
       end
-    end
-    
-    arr1.each do |f|
-      arr.delete(f)
     end
     
     puts "arr1[0].title/content/position before merge_sort(arr1) = #{arr1[0].title} / #{arr1[0].content} / #{arr1[0].position}"
@@ -196,27 +189,18 @@ class NodesController < ApplicationController
     puts "arr1[0].title/content/position after merge_sort(arr1) = #{arr1[0].title} / #{arr1[0].content} / #{arr1[0].position}"
     
     arr1.each do |f|
-      county = 0
       sorted.push(f)
       arr.each do |g|
         puts "\n\n"
         puts "#{f.position} is the parent of? #{g.position}"
         
-        
-        
         if g.temp_position.include? f.temp_position
-          arr2.push(g)
+          arr2.push(arr.delete(g))
           puts "It said yup."
           
           length = g.temp_position.length
-          
-          arr2[county].temp_position = arr2[county].temp_position[f.temp_position.length + 1 .. length - 1]
-          county += 1
+          # FIX THIS EVENTUALLY arr2.temp_position = arr2.temp_position[f.temp_position.length + 1 .. length - 1]
         end
-      end
-      
-      arr2.each do |q|
-        arr.delete(q)
       end
       
       puts arr2.length
@@ -231,11 +215,8 @@ class NodesController < ApplicationController
   
   def merge_sort(arr)
     
-    puts "\n\n\n==WELCOME TO MERGE SORT==\n\n\n"
-    
     local_arr = arr
-
-=begin
+    
     local_arr.each do |f|
       puts f.title
       puts f.content
@@ -243,8 +224,7 @@ class NodesController < ApplicationController
       puts f.temp_position
       puts "insider merge sort\nThe length of arr = #{local_arr.length}\n\n"
     end
-=end
-
+    
     if(local_arr.length == 1)
       local_arr.each do |f|
         puts "\n\nTHIS IS INSIDE MERGE SORT"
@@ -260,23 +240,20 @@ class NodesController < ApplicationController
     length = local_arr.length
     cut_length = length.to_i / 2
     
-=begin
-    local_arr.each do |f|
+    arr.each do |f|
       puts f.title
       puts f.content
       puts f.position
       puts f.temp_position
-      puts "Hello from inside mergesort \n\n"
+      puts "\n\n"
     end
-=end
-
-    puts "The length of local_arr = #{local_arr.length}\n\n"
+    
     arr1 = Array.new
     arr2 = Array.new
     sorted = Array.new
     
     count = 0
-    while count < cut_length do
+    while count < cut_length + 1 do
       arr1.push(arr[count])
       count += 1
     end
@@ -286,92 +263,24 @@ class NodesController < ApplicationController
       count += 1
     end
     
-    arr1.each do |f|
-      puts f.title
-      puts f.content
-      puts f.position
-      puts f.temp_position
-      puts "Hello from inside mergesort (arr1) \n\n"
-    end
-    
-    arr2.each do |f|
-      puts f.title
-      puts f.content
-      puts f.position
-      puts f.temp_position
-      puts "Hello from inside mergesort (arr2) \n\n"
-    end
-    
-    
-=begin
     count = 0
     arr1_count = 0
     arr2_count = 0
     while count < arr.length
-      puts "Count: #{count}\tarr1_count: #{arr1_count}\tarr2_count: #{arr2_count}"
-      
       temp1 = arr1[arr1_count]
       temp2 = arr2[arr2_count]
-      if(arr1_count < arr1.length - 1 && arr2_count < arr2.length - 1)
-        if(temp1.temp_position < temp2.temp_position)
-          sorted.push(temp1)
-          arr1_count += 1
-        else
-          sorted.push(temp2)
-          arr2_count += 1
-        end
-      end
       
-      count += 1
-    end
-    
-    return sorted
-=end
-
-    count = 0
-    while count < local_arr.length
-      if(!arr1.empty? && !arr2.empty?)
-        temp1 = arr1[0]
-        temp2 = arr2[0]
-        
-        puts "temp1\tposition: #{temp1.position}\ttemp_position: #{temp1.temp_position}\n"
-        puts "temp2\tposition: #{temp2.position}\ttemp_position: #{temp2.temp_position}\n"
-        
-        if(temp1.temp_position < temp2.temp_position)
-          sorted.push(temp1)
-          arr1.delete(temp1)
-          puts "Count: #{count}\tPosition: #{temp1.position}\n\n"
-        else
-          sorted.push(temp2)
-          puts "Count: #{count}\tPosition: #{temp2.position}\n\n"
-          arr2.delete(temp2)
-        end
-      elsif
-        sorted.push(arr2[0])
-        arr2.delete(arr2[0])
-      elsif
-        sorted.push(arr1[0])
-        arr1.delete(arr1[0])
-      end
-=begin
-      if(arr1.empty?)
-        sorted.push(arr2[0])
-        arr2.delete(arr2[0])
+      if(temp1.temp_position < temp2.temp_position)
+        sorted.push(temp1)
+        arr1_count += 1
       else
-        sorted.push(arr1[0])
-        arr1.delete(arr1[0])
+        sorted.push(temp2)
+        arr2_count += 1
       end
-=end
-      
       count += 1
-    end
-    
-    puts "\n\nSorted length: #{sorted.length}"
-    
-    sorted.each do |f|
-      puts "Position: #{f.position}"
     end
     
     return sorted
   end
+
 end

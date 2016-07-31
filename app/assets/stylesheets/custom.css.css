@@ -47,7 +47,8 @@
   margin-left: 15px; }
 
 body {
-  background-color: #000000; }
+  background-color: #000000;
+  font-size: 24px; }
 
 #center {
   text-align: center; }

@@ -4,6 +4,22 @@
   }
 </style>
 
+<% parent = @id.position %>
+<% variable = "" %>
+
+<% while parent.include? "." %>
+  <% variable += parent[0 .. parent.index(".")] %>
+  <% parent = parent[parent.index(".") + 1 .. (parent.length - 1)] %>
+<% end %>
+
+<% variable = variable.chomp(".") %>
+
+<% @nodes.each do |f| %>
+  <% if f.position == variable %>
+    <%= link_to "Back to #{f.title}", {:controller => "nodes", :action => "show", :id => f } %>
+  <% end %>
+<% end %>
+
 <h1>Showing selected node</h1>
 
 <p>Title: <%= @node.title %></p>

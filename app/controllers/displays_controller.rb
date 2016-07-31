@@ -44,6 +44,5 @@ class DisplaysController < ApplicationController
         @children = true
       end
     end
-
   end
 end
